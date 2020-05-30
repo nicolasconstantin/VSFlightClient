@@ -16,5 +16,7 @@ namespace webapiclient2.Models
         public DateTime Date { get; set; }
 
         public short Seats { get; set; }
+        public int Price { get; set; }
+        public int RemainingSeats { get; set; }
     }
 }

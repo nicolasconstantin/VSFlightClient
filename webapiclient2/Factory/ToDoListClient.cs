@@ -28,5 +28,19 @@ namespace webapiclient2
                 "flightsets/"));
             return await GetAsync<List<Flights>>(requestUrl);
         }
+
+        public async Task<Flights> GetFlight(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "flightsets/" + id));
+            return await GetAsync<Flights>(requestUrl);
+        }
+
+        public async Task<List<Bookings>> GetBookings()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "bookingsets/"));
+            return await GetAsync<List<Bookings>>(requestUrl);
+        }
     }
 }
