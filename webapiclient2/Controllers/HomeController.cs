@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using webapiclient2.Factory;
 using webapiclient2.Models;
 using webapiclient2.Utility;
@@ -47,19 +45,22 @@ namespace webapiclient2.Controllers
 
         public async Task<IActionResult> Bookings()
         {
-            int cpt = 0;
+            
             var data = await ApiClientFactory.Instance.GetBookings();
+            
             var avions = await ApiClientFactory.Instance.GetFlights();
-            List<Flights> list = new List<Flights>();
+            
+            List<Bookings> list = new List<Bookings>();
             foreach(var a in data)
             {
-                if (a.FlightNo == 1)
+                if (a.PassengerId == 1)
                 {
-                    list.Add(avions[cpt]);
+                    list.Add(a);
                 }
-                cpt++;
+               
             }
 
+            ViewData["Flights"] = avions;
             return View(list);
         }
 

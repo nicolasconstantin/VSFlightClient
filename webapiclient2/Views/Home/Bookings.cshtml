@@ -1,7 +1,8 @@
-﻿@model IEnumerable<webapiclient2.Models.Flights>
+﻿@model IEnumerable<webapiclient2.Models.Bookings>
 
 @{
     ViewData["Title"] = "Bookings";
+    IEnumerable<Flights> flights = ViewData["Flights"] as IEnumerable<Flights>;
 }
 
 <h1>Bookings</h1>
@@ -13,34 +14,66 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FlightNo)
+                Flight Number
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Departure)
+                Departure
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Destination)
+                Destination
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Date
             </th>
-            <th></th>
+            <th>
+                Price
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
+    string departure = "";
+    string destination = "";
+    string date = "";
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FlightNo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Departure)
+                <!-- Departure -->
+                @foreach(var f in flights)
+                {
+                    if(f.FlightNo == item.FlightNo)
+                    {
+                        departure = f.Departure;
+                    }
+                }
+                @departure
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Destination)
+                <!-- Destination -->
+                @foreach (var f in flights)
+                {
+                    if (f.FlightNo == item.FlightNo)
+                    {
+                        destination = f.Destination;
+         }
+     }
+                @destination
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                <!-- Date -->
+                @foreach (var f in flights)
+                {
+                    if (f.FlightNo == item.FlightNo)
+                    {
+                        date = f.Date.ToString();
+         }
+     }
+                @date
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
         </tr>
 }
