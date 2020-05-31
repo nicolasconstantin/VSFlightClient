@@ -3,14 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link rel="stylesheet" href="~/css/base.css">
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<p>
-    @Html.ActionLink("My Bookings", "Bookings");
+<p style="font-size: 18px; text-align: right;">
+    Buy color definition : <span style="color:red;">the price is Higher than normal</span> - <span style="color:blue;">no change</span> - <span style="color:green;">the price is lower than normal</span>
 </p>
 <table class="table">
     <thead>
@@ -33,11 +31,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingSeats)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FlightNo)
@@ -58,10 +60,51 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "OneFlight", new {  id=item.FlightNo  }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.RemainingSeats)
             </td>
+            @{
+                string price = "equal";
+
+                var days = (item.Date - DateTime.Now).TotalDays;
+
+                if (item.RemainingSeats > (item.Seats * 50 / 100) && days < 30)
+                {
+                    price = "cheaper";
+                }
+                else
+                {
+                    if (item.RemainingSeats > (item.Seats * 80 / 100) && days < 60)
+                    {
+                        price = "cheaper";
+                    }
+                    else
+                    {
+                        if (item.RemainingSeats < (item.Seats * 20 / 100))
+                        {
+                            price = "higher";
+                        }
+                    }
+                }
+            }
+            @if (price.Equals("higher"))
+            {
+                <td>
+                    @Html.ActionLink("Buy", "OneFlight", new { id = item.FlightNo }, new { @style = "color:red;" })
+                </td>
+            }
+            @if (price.Equals("cheaper"))
+            {
+                <td>
+                    @Html.ActionLink("Buy", "OneFlight", new { id = item.FlightNo }, new { @style = "color:green;" })
+                </td>
+            }
+            @if (price.Equals("equal"))
+            {
+                <td>
+                    @Html.ActionLink("Buy", "OneFlight", new { id = item.FlightNo })
+                </td>
+            }
+
         </tr>
 }
        
