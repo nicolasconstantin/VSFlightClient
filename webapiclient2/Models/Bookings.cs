@@ -9,5 +9,6 @@ namespace webapiclient2.Models
     {
         public int FlightNo { get; set; }
         public int PassengerId { get; set; }
+        public int Price { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -27,8 +28,15 @@ namespace webapiclient2.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var data = await ApiClientFactory.Instance.GetFlights();
-
-            return View(data);
+            List<Flights> remainingFlights = new List<Flights>();
+            foreach(var cc in data)
+            {
+                if(cc.Date > DateTime.Now && cc.RemainingSeats != 0)
+                {
+                    remainingFlights.Add(cc);
+                }
+            }
+            return View(remainingFlights);
         }
 
         public async Task<IActionResult> OneFlight(int id)
