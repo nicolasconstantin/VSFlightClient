@@ -65,6 +65,8 @@ namespace webapiclient2.Controllers
         public async Task<IActionResult> OneFlight(int id)
         {
             var data = await ApiClientFactory.Instance.GetFlight(id);
+            HttpContext.Session.SetInt32("FlightNumber", data.FlightNo);
+            HttpContext.Session.SetInt32("FlightPrice", data.Price);
             return View(data);
         }
 
@@ -95,9 +97,9 @@ namespace webapiclient2.Controllers
         {
             //création dans la db d'un nouveau booking avec le prix  le prix la session pour l'Id du mec et l'id du vol
             Bookings Booked = new Bookings();
-            Booked.FlightNo = 4;
-            Booked.PassengerId = 1;
-            Booked.Price = 45;
+            Booked.FlightNo = (int)HttpContext.Session.GetInt32("FlightNumber"); ;
+            Booked.PassengerId = (int)HttpContext.Session.GetInt32("idpassenger");
+            Booked.Price = (int)HttpContext.Session.GetInt32("FlightPrice"); ;
 
             await ApiClientFactory.Instance.BuyOneTicket(Booked);
 
