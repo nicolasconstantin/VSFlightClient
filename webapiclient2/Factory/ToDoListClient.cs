@@ -69,12 +69,12 @@ namespace webapiclient2
             return await GetAsync<int>(requestUrl);
         }
 
-        public async Task<int> GetAveragePriceForDestination(string Destination)
+        public async Task<float> GetAveragePriceForDestination(string Destination)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 "stats/GetAveragePriceForDestination/" + Destination));
 
-            return await GetAsync<int>(requestUrl);
+            return await GetAsync<float>(requestUrl);
         }
 
         public async Task<List<Statistics>> GetStats(string Destination)

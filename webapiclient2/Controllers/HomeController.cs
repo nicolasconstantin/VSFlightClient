@@ -111,14 +111,15 @@ namespace webapiclient2.Controllers
             return View();
         }
 
+       
         public async Task<IActionResult> TotalPrice()
         {
             string Flight = Request.Form["TotalSale"];
 
             int FlightInt = Int32.Parse(Flight);
             int Total = await ApiClientFactory.Instance.GetTotalPriceForFlight(FlightInt);
-            HttpContext.Session.SetInt32("TotalPrice", Total);
-
+            
+            ViewBag.total = Total;
             return View();
         }
 
@@ -126,9 +127,9 @@ namespace webapiclient2.Controllers
         {
             string Destination = Request.Form["AverageSale"];
 
-            int Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination.Substring(0,3));
-            HttpContext.Session.SetInt32("AveragePrice", Total);
-
+            float Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination.Substring(0,3));
+            
+            ViewBag.total2 = Total;
             return View();
         }
 
