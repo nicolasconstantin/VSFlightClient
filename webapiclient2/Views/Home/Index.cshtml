@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-<link rel="stylesheet" href="~/css/base.css">
+<link rel="stylesheet" href="~/css/oneForAll.css">
 
 <h1>Index</h1>
 
@@ -88,9 +88,9 @@
             }
             @if (price.Equals("higher"))
             {
-                <td>
-                    @Html.ActionLink("Buy", "OneFlight", new { id = item.FlightNo }, new { @style = "color:red;" })
-                </td>
+        <td>
+            @Html.ActionLink("Buy", "OneFlight", new { id = item.FlightNo }, new { @style = "color:red;" })
+        </td>
             }
             @if (price.Equals("cheaper"))
             {

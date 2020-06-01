@@ -4,12 +4,10 @@
     ViewData["Title"] = "Bookings";
     IEnumerable<Flights> flights = ViewData["Flights"] as IEnumerable<Flights>;
 }
+<link rel="stylesheet" href="~/css/corona.css">
 
 <h1>Bookings</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>

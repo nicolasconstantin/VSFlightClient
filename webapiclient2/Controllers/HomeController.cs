@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 using webapiclient2.Factory;
 using webapiclient2.Models;
@@ -64,9 +65,22 @@ namespace webapiclient2.Controllers
             return View(list);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Problems()
         {
             return View();
+        }
+
+        public async Task<IActionResult> BuyTickets()
+        {
+            //création dans la db d'un nouveau booking avec le prix  le prix la session pour l'Id du mec et l'id du vol
+            Bookings Booked = new Bookings();
+            Booked.FlightNo = 4;
+            Booked.PassengerId = 1;
+            Booked.Price = 45;
+
+            await ApiClientFactory.Instance.BuyOneTicket(Booked);
+
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
