@@ -17,7 +17,7 @@
                 <input type="number" name="Flight n°" id="TotalSale" />
             </td>
             <td>
-                <a href="@Url.Action("TotalPrice", "Home")" class="btn btn-default" style="background-color: white;">Show</a>
+                <input asp-action="TotalPrice" type="submit" name="TotalPrice" class="btn btn-default" style="background-color: white;" />
             </td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@
                 <input type="text" maxlength="3" name="Destination" id="AverageSale" />
             </td>
             <td>
-                <a href="@Url.Action("AveragePrice", "Home")" class="btn btn-default" style="background-color: white;">Show</a>
+                <input asp-action="AveragePrice" type="submit" name="AveragePrice" class="btn btn-default" style="background-color: white;" />
             </td>
         </tr>
         <tr>

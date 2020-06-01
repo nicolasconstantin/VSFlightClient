@@ -113,11 +113,22 @@ namespace webapiclient2.Controllers
 
         public async Task<IActionResult> TotalPrice()
         {
+            string Flight = Request.Form["TotalSale"];
+
+            int FlightInt = Int32.Parse(Flight);
+            int Total = await ApiClientFactory.Instance.GetTotalPriceForFlight(FlightInt);
+            HttpContext.Session.SetInt32("TotalPrice", Total);
+
             return View();
         }
 
         public async Task<IActionResult> AveragePrice()
         {
+            string Destination = Request.Form["AverageSale"];
+
+            int Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination);
+            HttpContext.Session.SetInt32("AveragePrice", Total);
+
             return View();
         }
 
