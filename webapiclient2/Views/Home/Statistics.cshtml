@@ -32,6 +32,10 @@
                 <a href="@Url.Action("AveragePrice", "Home")" class="btn btn-default" style="background-color: white;">Show</a>
             </td>
         </tr>
+        @using (Html.BeginForm())
+        {
+
+        
         <tr>
             <td>
                 <p>List of all tickets sold for a Destination</p>
@@ -44,5 +48,6 @@
                 <input asp-action="ListTickets" type="submit" name="ListTickets" class="btn btn-default" style="background-color: white;" />
             </td>
         </tr>
+        }
     </table>
 }
