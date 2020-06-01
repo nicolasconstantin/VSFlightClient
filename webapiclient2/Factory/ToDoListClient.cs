@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -58,6 +59,30 @@ namespace webapiclient2
             
             return await GetAsync<List<Passengers>>(requestUrl);
 
+        }
+
+        public async Task<int> GetTotalPriceForFlight(int FlightNumber)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "stats/" + FlightNumber));
+
+            return await GetAsync<int>(requestUrl);
+        }
+
+        public async Task<int> GetAveragePriceForDestination(string Destination)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "stats/" + Destination));
+
+            return await GetAsync<int>(requestUrl);
+        }
+
+        public async Task<List<Statistics>> GetStats(string Destination)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "stats/" + Destination));
+
+            return await GetAsync<List<Statistics>>(requestUrl);
         }
     }
 }
