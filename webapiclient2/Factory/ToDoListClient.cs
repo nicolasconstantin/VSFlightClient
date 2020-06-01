@@ -64,7 +64,7 @@ namespace webapiclient2
         public async Task<int> GetTotalPriceForFlight(int FlightNumber)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                "bookingsets/" + FlightNumber));
+                "stats/" + FlightNumber));
 
             return await GetAsync<int>(requestUrl);
         }
@@ -72,7 +72,7 @@ namespace webapiclient2
         public async Task<int> GetAveragePriceForDestination(string Destination)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                "bookingsets/" + Destination));
+                "stats/" + Destination));
 
             return await GetAsync<int>(requestUrl);
         }
@@ -80,7 +80,7 @@ namespace webapiclient2
         public async Task<List<Statistics>> GetStats(string Destination)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                "bookingsets/" + Destination));
+                "stats/" + Destination));
 
             return await GetAsync<List<Statistics>>(requestUrl);
         }
