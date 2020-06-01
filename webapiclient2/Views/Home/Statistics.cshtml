@@ -2,6 +2,47 @@
 @{
     ViewData["Title"] = "Statistics";
 }
+<link rel="stylesheet" href="~/css/oneForAll.css">
 
 <h1>Statistics</h1>
-
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <tr>
+            <td>
+                <p>Total sale price of all tickets sold for a flight</p>
+            </td>
+            <td>
+                <label>Flight n° :</label>
+                <input type="number" name="Flight n°" id="TotalSale" />
+            </td>
+            <td>
+                <a href="@Url.Action("TotalPrice", "Home")" class="btn btn-default" style="background-color: white;">Show</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Average sale price of all tickets sold for a destination</p>
+            </td>
+            <td>
+                <label>Destination :</label>
+                <input type="text" maxlength="3" name="Destination" id="AverageSale" />
+            </td>
+            <td>
+                <a href="@Url.Action("AveragePrice", "Home")" class="btn btn-default" style="background-color: white;">Show</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>List of all tickets sold for a Destination</p>
+            </td>
+            <td>
+                <label>Destination :</label>
+                <input type="text" maxlength="3" name="ListTickets" id="ListTickets" />
+            </td>
+            <td>
+                <input asp-action="ListTickets" type="submit" name="ListTickets" class="btn btn-default" style="background-color: white;" />
+            </td>
+        </tr>
+    </table>
+}

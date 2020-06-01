@@ -1,0 +1,42 @@
+﻿@model IEnumerable<webapiclient2.Models.Statistics>
+
+@{
+    ViewData["Title"] = "ListTickets";
+}
+
+<h1>ListTickets</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GivenName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GivenName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-default" style="background-color: white;">Back to List</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

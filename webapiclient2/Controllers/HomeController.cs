@@ -54,7 +54,7 @@ namespace webapiclient2.Controllers
             HttpContext.Session.SetInt32("idpassenger", PassengerID[0]);
             if (GetID != null)
             {
-                return RedirectToAction("Bookings", "Home", new { id = PassengerID[0] });
+                return RedirectToAction("Index", "Home", new { id = PassengerID[0] });
             } else
             {
                 return View();
@@ -103,12 +103,29 @@ namespace webapiclient2.Controllers
 
             await ApiClientFactory.Instance.BuyOneTicket(Booked);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Bookings", "Home");
         }
 
         public IActionResult Statistics()
         {
             return View();
+        }
+
+        public async Task<IActionResult> TotalPrice()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> AveragePrice()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> ListTickets()
+        {
+            string Destination = Request.Form["ListTickets"];
+            
+            return View(await ApiClientFactory.Instance.GetStats(Destination));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
