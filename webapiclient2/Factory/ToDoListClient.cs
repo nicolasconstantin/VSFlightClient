@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using webapiclient2.Models;
 
@@ -48,6 +49,15 @@ namespace webapiclient2
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 "bookingsets/"));
             return await GetAsync<List<Bookings>>(requestUrl);
+        }
+
+        public async Task<List<Passengers>> GetPassengers()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "passengersets/"));
+            
+            return await GetAsync<List<Passengers>>(requestUrl);
+
         }
     }
 }
