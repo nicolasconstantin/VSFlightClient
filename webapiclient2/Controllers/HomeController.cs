@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using webapiclient2.Factory;
 using webapiclient2.Models;
 using webapiclient2.Utility;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace webapiclient2.Controllers
 {
@@ -26,15 +28,37 @@ namespace webapiclient2.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var data = await ApiClientFactory.Instance.GetFlights();
-            List<Flights> remainingFlights = new List<Flights>();
-            foreach(var cc in data)
+
+            var allFlights = from avion in data
+                    where avion.Date > DateTime.Now && avion.RemainingSeats != 0
+                    select avion;
+            return View(allFlights);
+        }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Login(Passengers p)
+        {
+            var data = await ApiClientFactory.Instance.GetPassengers();
+
+            var GetID = from passenger in data
+                    where passenger.Surname.Equals(p.Surname)
+                    select passenger.PersonId;
+
+            var PassengerID = GetID.ToArray();
+            HttpContext.Session.SetInt32("idpassenger", PassengerID[0]);
+            if (GetID != null)
             {
-                if(cc.Date > DateTime.Now && cc.RemainingSeats != 0)
-                {
-                    remainingFlights.Add(cc);
-                }
+                return RedirectToAction("Bookings", "Home", new { id = PassengerID[0] });
+            } else
+            {
+                return View();
             }
-            return View(remainingFlights);
+
         }
 
         public async Task<IActionResult> OneFlight(int id)
@@ -51,17 +75,14 @@ namespace webapiclient2.Controllers
             var avions = await ApiClientFactory.Instance.GetFlights();
             
             List<Bookings> list = new List<Bookings>();
-            foreach(var a in data)
-            {
-                if (a.PassengerId == 1)
-                {
-                    list.Add(a);
-                }
-               
-            }
 
+            int passengerID = HttpContext.Session.GetInt32("idpassenger").Value;
+            var myBookings = from f in data
+                       where f.PassengerId.Equals(passengerID)
+                       select f;
+                
             ViewData["Flights"] = avions;
-            return View(list);
+            return View(myBookings);
         }
 
         public IActionResult Privacy()
