@@ -134,9 +134,11 @@ namespace webapiclient2.Controllers
 
         public async Task<IActionResult> ListTickets()
         {
+
             string Destination = Request.Form["ListTickets"];
             
-            return View(await ApiClientFactory.Instance.GetStats(Destination));
+            var list = await ApiClientFactory.Instance.GetStats(Destination.Substring(0,3));
+            return View(list);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
