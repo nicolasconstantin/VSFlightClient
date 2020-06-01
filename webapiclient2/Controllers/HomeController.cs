@@ -126,7 +126,7 @@ namespace webapiclient2.Controllers
         {
             string Destination = Request.Form["AverageSale"];
 
-            int Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination);
+            int Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination.Substring(0,3));
             HttpContext.Session.SetInt32("AveragePrice", Total);
 
             return View();
