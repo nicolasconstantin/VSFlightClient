@@ -2,7 +2,16 @@
 @{
     ViewData["Title"] = "TotalPrice";
 }
+<link rel="stylesheet" href="~/css/oneForAll.css">
+<link rel="stylesheet" href="~/css/oneFlight.css">
 
 <h1>TotalPrice</h1>
 
-<p>@ViewBag.Total</p>
+<br />
+<br />
+
+<p>The total price of all tickets buy for the flight @ViewBag.flight is <span style="font-weight: bold;">@ViewBag.Total</span></p>
+
+<div class="backToList">
+    <a href="@Url.Action("Statistics", "Home")" class="btn btn-default" style="background-color: white;">Back to List</a>
+</div>
