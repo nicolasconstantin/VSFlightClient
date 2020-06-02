@@ -6,7 +6,7 @@
 }
 <link rel="stylesheet" href="~/css/oneForAll.css">
 
-<h1>Index</h1>
+<h1>Available flights</h1>
 
 <p style="font-size: 18px; text-align: right;">
     Buy color definition : <span style="color:red;">the price is Higher than normal</span> - <span style="color:blue;">no change</span> - <span style="color:green;">the price is lower than normal</span>
@@ -67,7 +67,7 @@
                 @Html.DisplayFor(modelItem => item.RemainingSeats)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                CHF @Html.DisplayFor(modelItem => item.Price).–
             </td>
             @{
                 string price = "equal";

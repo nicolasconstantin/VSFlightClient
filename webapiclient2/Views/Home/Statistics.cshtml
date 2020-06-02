@@ -14,10 +14,10 @@
             </td>
             <td>
                 <label>Flight n° :</label>
-                <input type="number" name="TotalSale" id="TotalSale" />
+                <input type="number" min="1" name="TotalSale" id="TotalSale" />
             </td>
             <td>
-                <input asp-action="TotalPrice" type="submit" name="TotalPrice" class="btn btn-default" style="background-color: white;" />
+                <input asp-action="TotalPrice" value="Show" type="submit" name="TotalPrice" class="btn btn-default" style="background-color: white;" />
             </td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@
                 <input type="text" maxlength="3" name="AverageSale" id="AverageSale" />
             </td>
             <td>
-                <input asp-action="AveragePrice" type="submit" name="AveragePrice" class="btn btn-default" style="background-color: white;" />
+                <input asp-action="AveragePrice" value="Show" type="submit" name="AveragePrice" class="btn btn-default" style="background-color: white;" />
             </td>
         </tr>
         @using (Html.BeginForm())
@@ -38,14 +38,14 @@
         
         <tr>
             <td>
-                <p>List of all tickets sold for a Destination</p>
+                <p>List of all tickets sold for a destination</p>
             </td>
             <td>
                 <label>Destination :</label>
                 <input type="text" maxlength="3" name="ListTickets" id="ListTickets" />
             </td>
             <td>
-                <input asp-action="ListTickets" type="submit" name="ListTickets" class="btn btn-default" style="background-color: white;" />
+                <input asp-action="ListTickets" value="Show" type="submit" name="ListTickets" class="btn btn-default" style="background-color: white;" />
             </td>
         </tr>
         }

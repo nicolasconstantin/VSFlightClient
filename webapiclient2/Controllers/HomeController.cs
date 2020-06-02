@@ -46,24 +46,32 @@ namespace webapiclient2.Controllers
 
         public async Task<IActionResult> Login(Passengers p)
         {
-            var data = await ApiClientFactory.Instance.GetPassengers();
-
-            var GetID = from passenger in data
-                    where passenger.Surname.Equals(p.Surname)
-                    select passenger.PersonId;
-
-            var PassengerID = GetID.ToArray();
-            HttpContext.Session.SetInt32("idpassenger", PassengerID[0]);
-            if (GetID != null)
+            try
             {
-                HttpContext.Session.SetInt32("ispassengerconnected", 1); //Someone is connected
+                var data = await ApiClientFactory.Instance.GetPassengers();
 
-                return RedirectToAction("Index", "Home", new { id = PassengerID[0] });
-            } else
+                var GetID = from passenger in data
+                            where passenger.Surname.Equals(p.Surname)
+                            select passenger.PersonId;
+
+                var PassengerID = GetID.ToArray();
+
+                if (GetID != null)
+                {
+                    HttpContext.Session.SetInt32("idpassenger", PassengerID[0]);
+                    HttpContext.Session.SetInt32("ispassengerconnected", 1); //Someone is connected
+
+                    return RedirectToAction("Index", "Home", new { id = PassengerID[0] });
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (Exception)
             {
                 return View();
             }
-
         }
 
         public async Task<IActionResult> OneFlight(int id)
@@ -71,7 +79,7 @@ namespace webapiclient2.Controllers
             var data = await ApiClientFactory.Instance.GetFlight(id);
             ViewBag.flightID = id;
             string datetrunc = data.Date.ToString();
-            ViewBag.DateTrunc = datetrunc.Substring(0,11);
+            ViewBag.DateTrunc = datetrunc.Substring(0,16);
             HttpContext.Session.SetInt32("FlightNumber", data.FlightNo);
             HttpContext.Session.SetInt32("FlightPrice", data.Price);
             return View(data);
@@ -102,6 +110,7 @@ namespace webapiclient2.Controllers
             return View();
         }
 
+        
         public async Task<IActionResult> BuyTickets()
         {
             //création dans la db d'un nouveau booking avec le prix  le prix la session pour l'Id du mec et l'id du vol
@@ -110,8 +119,19 @@ namespace webapiclient2.Controllers
             Booked.PassengerId = (int)HttpContext.Session.GetInt32("idpassenger");
             Booked.Price = (int)HttpContext.Session.GetInt32("FlightPrice");
 
+            //Flights flights = new Flights();
+            var flight = await ApiClientFactory.Instance.GetFlight(Booked.FlightNo);
             await ApiClientFactory.Instance.BuyOneTicket(Booked);
+            
+            try
+            {
+                await ApiClientFactory.Instance.PostAsyncFlight(flight);
+            }
+            catch (Exception)
+            {
 
+            }
+            
             return RedirectToAction("Bookings", "Home");
         }
 

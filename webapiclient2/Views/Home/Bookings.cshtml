@@ -6,13 +6,13 @@
 }
 <link rel="stylesheet" href="~/css/oneForAll.css">
 
-<h1>Bookings</h1>
+<h1>My bookings</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Flight Number
+                Flight n°
             </th>
             <th>
                 Departure
@@ -68,10 +68,10 @@
                         date = f.Date.ToString();
          }
      }
-                @date
+                @date.Substring(0,16)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                CHF @Html.DisplayFor(modelItem => item.Price).–
             </td>
         </tr>
 }

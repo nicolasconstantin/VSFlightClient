@@ -18,6 +18,15 @@ namespace webapiclient2
             return await PostAsync<Bookings>(requestUrl, model);
         }
 
+        public async Task<Message<Flights>> PostAsyncFlight(Flights model)
+        {
+          
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                "flightsets/"));
+            
+            return await PostAsync<Flights>(requestUrl, model);
+        }
+
         public async Task<List<Flights>> GetFlights()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
