@@ -6,18 +6,13 @@
 <link rel="stylesheet" href="~/css/oneForAll.css">
 <link rel="stylesheet" href="~/css/oneFlight.css">
 
-<h1>OneFlight</h1>
+<h1>Flight n° @ViewBag.flightID</h1>
 
 <div>
-    <h4>Flights</h4>
+    
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FlightNo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FlightNo)
-        </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Departure)
         </dt>
@@ -34,10 +29,10 @@
             @Html.DisplayNameFor(model => model.Date)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Date)
+            @ViewBag.DateTrunc
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RemainingSeats)
+            Remaining Seats
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.RemainingSeats)
@@ -46,7 +41,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            CHF @Html.DisplayFor(model => model.Price).–
         </dd>
     </dl>
 </div>

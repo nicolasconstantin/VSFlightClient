@@ -15,7 +15,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FlightNo)
+                Flight n°
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Departure)
@@ -30,10 +30,10 @@
                 @Html.DisplayNameFor(model => model.Seats)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Remaining Seats
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RemainingSeats)
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th></th>
         </tr>
@@ -52,16 +52,22 @@
                 @Html.DisplayFor(modelItem => item.Destination)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @{
+                    string date = "";
+                    date = item.Date.ToString();
+                    string date2 = date.Substring(0, 16);
+                    ViewBag.dates = date2;
+                }
+                @ViewBag.dates
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Seats)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.RemainingSeats)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RemainingSeats)
+                @Html.DisplayFor(modelItem => item.Price)
             </td>
             @{
                 string price = "equal";

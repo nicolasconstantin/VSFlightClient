@@ -65,6 +65,9 @@ namespace webapiclient2.Controllers
         public async Task<IActionResult> OneFlight(int id)
         {
             var data = await ApiClientFactory.Instance.GetFlight(id);
+            ViewBag.flightID = id;
+            string datetrunc = data.Date.ToString();
+            ViewBag.DateTrunc = datetrunc.Substring(0,11);
             HttpContext.Session.SetInt32("FlightNumber", data.FlightNo);
             HttpContext.Session.SetInt32("FlightPrice", data.Price);
             return View(data);
