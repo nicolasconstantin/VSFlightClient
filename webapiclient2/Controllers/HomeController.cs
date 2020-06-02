@@ -39,6 +39,8 @@ namespace webapiclient2.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            HttpContext.Session.SetInt32("ispassengerconnected", 0); //Nobody is connected
+
             return View();
         }
 
@@ -54,6 +56,8 @@ namespace webapiclient2.Controllers
             HttpContext.Session.SetInt32("idpassenger", PassengerID[0]);
             if (GetID != null)
             {
+                HttpContext.Session.SetInt32("ispassengerconnected", 1); //Someone is connected
+
                 return RedirectToAction("Index", "Home", new { id = PassengerID[0] });
             } else
             {
@@ -90,6 +94,8 @@ namespace webapiclient2.Controllers
 
         public IActionResult Problems()
         {
+            HttpContext.Session.SetInt32("ispassengerconnected", 0); //Nobody is connected 
+
             return View();
         }
 
@@ -97,9 +103,9 @@ namespace webapiclient2.Controllers
         {
             //création dans la db d'un nouveau booking avec le prix  le prix la session pour l'Id du mec et l'id du vol
             Bookings Booked = new Bookings();
-            Booked.FlightNo = (int)HttpContext.Session.GetInt32("FlightNumber"); ;
+            Booked.FlightNo = (int)HttpContext.Session.GetInt32("FlightNumber");
             Booked.PassengerId = (int)HttpContext.Session.GetInt32("idpassenger");
-            Booked.Price = (int)HttpContext.Session.GetInt32("FlightPrice"); ;
+            Booked.Price = (int)HttpContext.Session.GetInt32("FlightPrice");
 
             await ApiClientFactory.Instance.BuyOneTicket(Booked);
 
@@ -114,22 +120,41 @@ namespace webapiclient2.Controllers
        
         public async Task<IActionResult> TotalPrice()
         {
-            string Flight = Request.Form["TotalSale"];
+            try
+            {
+                string Flight = Request.Form["TotalSale"];
 
-            int FlightInt = Int32.Parse(Flight);
-            int Total = await ApiClientFactory.Instance.GetTotalPriceForFlight(FlightInt);
+                int FlightInt = Int32.Parse(Flight);
+                int Total = await ApiClientFactory.Instance.GetTotalPriceForFlight(FlightInt);
+
+                ViewBag.flight = FlightInt;
+                ViewBag.total = Total;
+            }catch(SystemException)
+            {
+                ViewBag.total = 0;
+                ViewBag.flight = "not existant";
+            }
             
-            ViewBag.total = Total;
             return View();
         }
 
         public async Task<IActionResult> AveragePrice()
         {
-            string Destination = Request.Form["AverageSale"];
+            try
+            {
+                string Destination = Request.Form["AverageSale"];
 
-            float Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination.Substring(0,3));
-            
-            ViewBag.total2 = Total;
+                float Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination.Substring(0, 3));
+
+                ViewBag.destination = Destination.Substring(0, 3);
+                ViewBag.total2 = Total;
+            }
+            catch (Exception)
+            {
+                ViewBag.total2 = 0;
+                ViewBag.destination = "nowhere";
+            }
+
             return View();
         }
 

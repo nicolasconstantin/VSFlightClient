@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "ListTickets";
 }
+<link rel="stylesheet" href="~/css/oneForAll.css">
 
 <h1>ListTickets</h1>
 
@@ -10,15 +11,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.GivenName)
+                <p>First name and last name</p>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FlightNo)
+                <p>Flight number</p>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -33,10 +33,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                <a href="@Url.Action("Index", "Home")" class="btn btn-default" style="background-color: white;">Back to List</a>
-            </td>
         </tr>
 }
     </tbody>
 </table>
+<div>
+    <a href="@Url.Action("Statistics", "Home")" class="btn btn-default" style="background-color: white;">Back to List</a>
+</div>
