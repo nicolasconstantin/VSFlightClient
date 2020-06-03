@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Dish";
+}
+<link rel="stylesheet" href="~/css/oneForAll.css">
+<link rel="stylesheet" href="~/css/oneFlight.css">
+
+<h1>You choose the @ViewBag.Dish Menu</h1>
+
+<p>For the Starter, you will have @ViewBag.Starter.</p>
+<p>For the main course, you will have @ViewBag.Main with @ViewBag.Accompaniment.</p>
+<p>For the dessert, you will have @ViewBag.Dessert.</p>
+<p>And for the drink, you will have @ViewBag.Drink.</p>
+
+<div class="backToList">
+    <a href="@Url.Action("Bookings", "Home")" class="btn btn-default" style="background-color: white;">Back to your booking list</a>
+</div>

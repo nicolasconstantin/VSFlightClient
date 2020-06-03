@@ -8,6 +8,9 @@
 
 <h1>My bookings</h1>
 
+@using (Html.BeginForm())
+{
+
 <table class="table">
     <thead>
         <tr>
@@ -26,22 +29,26 @@
             <th>
                 Price
             </th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     string departure = "";
     string destination = "";
     string date = "";
+    Boolean isToday = false;
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FlightNo)
             </td>
             <td>
                 <!-- Departure -->
-                @foreach(var f in flights)
+                @foreach (var f in flights)
                 {
-                    if(f.FlightNo == item.FlightNo)
+                    if (f.FlightNo == item.FlightNo)
                     {
                         departure = f.Departure;
                     }
@@ -55,8 +62,8 @@
                     if (f.FlightNo == item.FlightNo)
                     {
                         destination = f.Destination;
-         }
-     }
+                    }
+                }
                 @destination
             </td>
             <td>
@@ -66,15 +73,42 @@
                     if (f.FlightNo == item.FlightNo)
                     {
                         date = f.Date.ToString();
-         }
-     }
-                @date.Substring(0,16)
+                        string today = DateTime.Now.ToString();
+                        if (date.Substring(0, 10).Equals(today.Substring(0, 10)))
+                        {
+                            isToday = true;
+                        }
+                    }
+                }
+                @date.Substring(0, 16)
             </td>
             <td>
                 CHF @Html.DisplayFor(modelItem => item.Price).–
+            </td>
+            <td>
+                @if (isToday)
+                {
+                    //affichage des choix
+                <select name="MenuChoice" id="MenuChoice">
+                    <option value="Beef">Beef</option>
+                    <option value="Chicken">Chicken</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                </select>
+                }
+            </td>
+            <td>
+                @if (isToday)
+                {
+                    //affichage du bouton
+                    <input asp-action="Dish" type="submit" name="Dish" value="Choose" class="btn btn-default" style="background-color: white;"/>
+                }
+                @{
+                    isToday = false;
+                }
             </td>
         </tr>
 }
     </tbody>
 </table>
+}
 <a href="@Url.Action("Index", "Home")" class="btn btn-default" style="background-color: white;">Back to flights list</a>

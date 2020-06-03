@@ -140,6 +140,40 @@ namespace webapiclient2.Controllers
             return View();
         }
 
+        public IActionResult Dish()
+        {
+            string DishChoosen = Request.Form["MenuChoice"];
+            string[] finalDish;
+
+            Beef beef = new Beef();
+            Chicken chicken = new Chicken();
+            Vegetarian vege = new Vegetarian();
+
+            switch (DishChoosen)
+            {
+                case "Beef":
+                    finalDish = beef.MyDish();
+                    break;
+                case "Chicken":
+                    finalDish = chicken.MyDish();
+                    break;
+                case "Vegetarian":
+                    finalDish = vege.MyDish();
+                    break;
+                default:
+                    finalDish = beef.MyDish();
+                    break;
+            }
+
+            ViewBag.Dish = DishChoosen;
+            ViewBag.Starter = finalDish[0];
+            ViewBag.Main = finalDish[1];
+            ViewBag.Accompaniment = finalDish[2];
+            ViewBag.Dessert = finalDish[3];
+            ViewBag.Drink = finalDish[4];
+
+            return View();
+        }
        
         public async Task<IActionResult> TotalPrice()
         {
@@ -168,7 +202,6 @@ namespace webapiclient2.Controllers
                 string Destination = Request.Form["AverageSale"];
 
                 float Total = await ApiClientFactory.Instance.GetAveragePriceForDestination(Destination.Substring(0, 3));
-
                 ViewBag.destination = Destination.Substring(0, 3);
                 ViewBag.total2 = Total;
             }
@@ -185,7 +218,9 @@ namespace webapiclient2.Controllers
         {
 
             string Destination = Request.Form["ListTickets"];
-            
+
+            ViewBag.destination = Destination.Substring(0, 3);
+
             var list = await ApiClientFactory.Instance.GetStats(Destination.Substring(0,3));
             return View(list);
         }
